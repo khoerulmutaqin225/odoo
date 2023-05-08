@@ -16,6 +16,49 @@
 			</field>
 		</record>
 
+		<!-- arisnew.course form view -->
+		<record id="arisnew_course_view_form" model="ir.ui.view">
+			<field name="name">arisnew.course.view.form</field>
+			<field name="model">arisnew.course</field>
+			<field name="arch" type="xml">
+				<form string="">
+					<sheet>
+						<group>
+							<!-- Add your fields here -->
+							<group>
+								<field name="name" />
+							</group>
+							<group>
+								<field name="active" />
+							</group>
+
+							<notebook>
+								<page name="Description" string="description">
+									<field name="description" />
+								</page>
+							</notebook>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<!-- arisnew.course search view -->
+		<record id="arisnew_course_view_search" model="ir.ui.view">
+			<field name="name">arisnew.course.view.search</field>
+			<field name="model">arisnew.course</field>
+			<field name="arch" type="xml">
+				<search string="Search Description">
+					<!-- Name adn description Search -->
+					<!-- Add your fields here -->
+					<field name="name" />
+					<field name="description" />
+
+					<!-- filter Search -->
+					<filter name="php" string="PHP" domain="[('name', 'ilike', 'php')]" />
+				</search>
+			</field>
+		</record>
 
 		<!-- arisnew.course action window -->
 		<record id="arisnew_course_action" model="ir.actions.act_window">
