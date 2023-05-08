@@ -28,7 +28,7 @@
 							<group>
 								<field name="name" />
 							</group>
-							<group>
+								<group>
 								<field name="active" />
 							</group>
 

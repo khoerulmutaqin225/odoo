@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <!-- model.name form view -->
+        <record id="inherit_res_partner_form" model="ir.ui.view">
+            <field name="name">inherit_res_partner_form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="arch" type="xml">
+                <!-- Drop your code here -->
+                <field name="vat" position="after">
+                    <field name="is_instructor" />
+                    <field name="is_student" />
+                </field>
+            </field>
+        </record>
+
+        <!-- res partner_search view -->
+        <record id="res_partner_search_inherit" model="ir.ui.view">
+            <field name="name">res.partner.inherit.view.search</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter" />
+            <field name="arch" type="xml">
+                <!-- <search string="Search Description"> -->
+                <!-- Add your fields here -->
+                <field name="parent_id" position="after">
+                    <filter name="Student" string="student" domain="[('is_student', '=', 'True')]" />
+                    <filter name="Instructor" string="instructor"
+                        domain="[('is_instructor', '=', 'True')]" />
+                </field>
+                <!-- </search> -->
+            </field>
+        </record>
+
+
+        <!-- res.partner ins action window -->
+        <record id="student_action_window" model="ir.actions.act_window">
+            <field name="name">Student</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="context">
+                'search_default_student' : 1,
+                'default_is_student' : True,
+            </field>
+        </record>
+        <!-- This Menu Item must have a parent and an action -->
+
+        <menuitem
+            id="student_menu_act"
+            name="Student"
+            parent="arisnew_academy_master_menu_categ"
+            action="student_action_window" sequence="30" />
+
+
+        <!-- res.partner Instructor ins action window -->
+        <record id="instructor_action_window" model="ir.actions.act_window">
+            <field name="name">Instructor</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="context">
+                'search_default_instructor' : 1,
+                'default_is_instructor' : True,
+            </field>
+        </record>
+        <!-- This Menu Item must have a parent and an action -->
+
+        <menuitem
+            id="instructor_menu_act"
+            name="Instructor"
+            parent="arisnew_academy_master_menu_categ"
+            action="instructor_action_window" sequence="40" />
+
+    </data>
+
+
+</odoo>
