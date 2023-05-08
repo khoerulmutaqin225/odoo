@@ -4,13 +4,13 @@ from odoo import fields, models
 
 
 class Course(models.Model):
-    _name = 'arisnew.course'
-    _description = 'Data Course'
+    _name = 'arisnew.course.category'
+    _description = 'Data Course Category'
 
     name = fields.Char(
-        string='Course Name',
+        string='Course Category Name',
         required=True,
-        help="Fill course name..."
+        help="Fill course category name..."
     )
 
     description = fields.Text(
@@ -22,7 +22,8 @@ class Course(models.Model):
         default=True
     )
 
-    category_id = fields.Many2one(
-        comodel_name='arisnew.course.category',
-        string='Category',
+    course_ids = fields.One2many(
+        comodel_name='arisnew.course',
+        inverse_name='category_id',
+        string='Course'
     )
