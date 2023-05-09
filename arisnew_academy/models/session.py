@@ -33,6 +33,41 @@ class Session(models.Model):
         string='Attendee'
     )
 
+    # compute akan generate otomatis oleh sistem
+
+    taken_seats = fields.Float(
+        compute='_compute_taken_seats',
+        string='Taken Seats',
+        store=True,
+    )
+
+    @api.depends('min_attendee', 'attendee_ids')
+    def _compute_taken_seats(self):
+        for record in self:
+            if not record.min_attendee:
+                record.taken_seats = 0.0
+            else:
+                record.taken_seats = 100.0 * len(record.attendee_ids) / record.min_attendee
+
+    @api.onchange('min_attendee', 'attendee_ids')
+    def _onchange_attende(self):
+    # set auto-changing field
+        if self.min_attendee < 0:
+            return{
+                'warning': {
+                'title': "Salah data",
+                'message': "Min Attende tidak boleh kurang dari 0",
+            },
+        }
+        if self.min_attendee < len(self.attendee_ids):
+            return{
+                'warning': {
+                'title': "Too many attendee",
+                'message': "Increase min attendee or remove excess attendees",
+            },
+        }
+
+    
     class Attende(models.Model):
         _name = 'arisnew.attendee'
         _description = 'Attende of Course session'

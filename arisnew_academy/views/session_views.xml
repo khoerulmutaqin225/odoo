@@ -14,6 +14,7 @@
                     <field name="instructor_id" />
                     <field name="session_date" />
                     <field name="min_attendee" />
+                    <field name="taken_seats" widget="progressbar" />
                 </tree>
             </field>
         </record>
@@ -26,16 +27,20 @@
                 <form string="">
                     <sheet>
                         <group>
-                            <!-- Add your fields here -->
-                            <field name="name" />
-                            <field name="course_id" />
-                            <field name="instructor_id" />
+                            <group>
+                                <!-- Add your fields here -->
+                                <field name="name" />
+                                <field name="course_id" />
+                                <field name="instructor_id" />
 
+                            </group>
+                            <group>
+                                <field name="session_date" />
+                                <field name="min_attendee" />
+                                <field name="taken_seats" widget="progressbar"/>
+                            </group>
                         </group>
-                        <group>
-                            <field name="session_date" />
-                            <field name="min_attendee" />
-                        </group>
+
                         <notebook>
                             <page name="attendee" string="Attendee">
                                 <field name="attendee_ids">
@@ -43,7 +48,7 @@
                                         <field name="name" />
                                         <field name="student_id" />
                                         <field name="reg_date" />
-                                        <field name="remark"/>
+                                        <field name="remark" />
                                     </tree>
                                 </field>
                             </page>
@@ -53,19 +58,19 @@
             </field>
         </record>
 
-
+        <!-- Catatan Patokan -->
         <!-- arisnew.session action window -->
         <record id="arisnew_session_action" model="ir.actions.act_window">
             <field name="name">arisnew.session.action</field>
-            <field name="type">ir.actions.act_window</field>
+            <!-- <field name="type">ir.actions.act_window</field> -->
             <field name="res_model">arisnew.session</field>
             <field name="view_mode">tree,form</field>
-            <field name="view_type">form</field>
+            <!-- <field name="view_type">form</field> -->
             <field name="help" type="html">
-                <p class="oe_view_nocontent_create"> Create New session.... <!-- Add Text Here -->
+                <p class="oe_view_nocontent_create">
+                    Create New session....
                 </p>
                 <p>
-                    <!-- More details about what a user can do with this object will be OK -->
 
                 </p>
             </field>

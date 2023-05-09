@@ -37,10 +37,10 @@
         <!-- res.partner ins action window -->
         <record id="student_action_window" model="ir.actions.act_window">
             <field name="name">Student</field>
-            <field name="type">ir.actions.act_window</field>
+            <!-- <field name="type">ir.actions.act_window</field> -->
             <field name="res_model">res.partner</field>
             <field name="view_mode">tree,form</field>
-            <field name="view_type">form</field>
+            <!-- <field name="view_type">form</field> -->
             <field name="context">
                 'search_default_student' : 1,
                 'default_is_student' : True,
@@ -58,16 +58,11 @@
         <!-- res.partner Instructor ins action window -->
         <record id="instructor_action_window" model="ir.actions.act_window">
             <field name="name">Instructor</field>
-            <field name="type">ir.actions.act_window</field>
+            <!-- <field name="type">ir.actions.act_window</field> -->
             <field name="res_model">res.partner</field>
             <field name="view_mode">tree,form</field>
-            <field name="view_type">form</field>
-            <field name="context">
-                'search_default_instructor' : 1,
-                'default_is_instructor' : True,
-            </field>
+            <!-- <field name="view_type">form</field> -->
         </record>
-        <!-- This Menu Item must have a parent and an action -->
 
         <menuitem
             id="instructor_menu_act"
