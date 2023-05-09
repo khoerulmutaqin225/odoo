@@ -1,4 +1,4 @@
-from odoo import api, fields, models
+from odoo import api, fields, models, exceptions
 
 
 class Session(models.Model):
@@ -47,27 +47,45 @@ class Session(models.Model):
             if not record.min_attendee:
                 record.taken_seats = 0.0
             else:
-                record.taken_seats = 100.0 * len(record.attendee_ids) / record.min_attendee
+                record.taken_seats = 100.0 * \
+                    len(record.attendee_ids) / record.min_attendee
 
     @api.onchange('min_attendee', 'attendee_ids')
     def _onchange_attende(self):
-    # set auto-changing field
+        # set auto-changing field
         if self.min_attendee < 0:
-            return{
+            return {
                 'warning': {
-                'title': "Salah data",
-                'message': "Min Attende tidak boleh kurang dari 0",
-            },
-        }
+                    'title': "Salah data",
+                    'message': "Min Attende tidak boleh kurang dari 0",
+                },
+            }
         if self.min_attendee < len(self.attendee_ids):
-            return{
+            return {
                 'warning': {
-                'title': "Too many attendee",
-                'message': "Increase min attendee or remove excess attendees",
-            },
-        }
+                    'title': "Too many attendee",
+                    'message': "Increase min attendee or remove excess attendees",
+                },
+            }
 
-    
+        # sql constraints
+        _sql_constraints = [
+            ('name_unique',
+             'UNIQUE(name)',
+             "Nama session harus unik, tidak boleh sama!!!"),
+        ]
+
+        # python constraints
+        @api.constrains('instrtuctor_id', 'attendee_ids' )
+        def _check_instructor_not_in_attendees(self):
+            for r in self:
+                students = [record.student_id.id for record in r.attendee_ids]
+
+                if r.instructor_id and r.instructor_id in students:
+                    raise exceptions.ValidationError("Instructor tidak boleh menjadi attendee....!!!")
+
+          # all records passed the test, don't return anything
+
     class Attende(models.Model):
         _name = 'arisnew.attendee'
         _description = 'Attende of Course session'
