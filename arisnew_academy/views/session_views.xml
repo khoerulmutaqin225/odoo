@@ -15,6 +15,7 @@
                     <field name="session_date" />
                     <field name="min_attendee" />
                     <field name="taken_seats" widget="progressbar" />
+                    <field name="state" />
                 </tree>
             </field>
         </record>
@@ -25,19 +26,41 @@
             <field name="model">arisnew.session</field>
             <field name="arch" type="xml">
                 <form string="">
+                    <header>
+                        <button type="object" name="action_confirm" string="Confirm"
+                            class="oe_highlight"
+                            states="draft" />
+                        <button type="object" name="action_done" string="Done" class="oe_highlight"
+                            states="confirm" />
+                        <button type="object" name="action_cancel" string="Cancel"
+                            class="btn-danger" states="confirm,done"
+                            confirm="yakin mau cancel data ini?" />
+                        <button type="object" name="action_Reset" string="Reset to Draft"
+                            class="oe_highlight" states="cancel"
+                            confirm="yakin mau reset ke draft" />
+
+                        <field name="state" widget="statusbar"
+                            statusbar_visible="draft,confirm,done" />
+                    </header>
+
                     <sheet>
                         <group>
                             <group>
                                 <!-- Add your fields here -->
-                                <field name="name" />
-                                <field name="course_id" />
-                                <field name="instructor_id" />
+                                <field name="name"
+                                    attrs="{'readonly': [('state', '!=' , 'draft')]}" />
+                                <field name="course_id"
+                                    attrs="{'readonly': [('state', '!=' , 'draft')]}" />
+                                <field name="instructor_id"
+                                    attrs="{'readonly': [('state', '!=' , 'draft')]}" />
 
                             </group>
                             <group>
-                                <field name="session_date" />
-                                <field name="min_attendee" />
-                                <field name="taken_seats" widget="progressbar"/>
+                                <field name="session_date"
+                                    attrs="{'readonly': [('state', '!=' , 'draft')]}" />
+                                <field name="min_attendee"
+                                    attrs="{'readonly': [('state', '!=' , 'draft')]}" />
+                                <field name="taken_seats" widget="progressbar" />
                             </group>
                         </group>
 
@@ -54,6 +77,10 @@
                             </page>
                         </notebook>
                     </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_follower" />
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
                 </form>
             </field>
         </record>

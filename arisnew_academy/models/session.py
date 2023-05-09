@@ -3,28 +3,33 @@ from odoo import api, fields, models, exceptions
 
 class Session(models.Model):
     _name = 'arisnew.session'
+    _inherit ='mail.thread'
     _description = 'Data Course Session..'
 
-    name = fields.Char(string='Name')
+    name = fields.Char(string='Name', track_visibility='onchange')
 
     course_id = fields.Many2one(
         comodel_name='arisnew.course',
-        string='Course'
+        string='Course',
+        track_visibility='onchange'
     )
 
     instructor_id = fields.Many2one(
         comodel_name='res.partner',
         string='instructor',
         domain="[('is_instructor', '=', True)]",
+        track_visibility='onchange'
     )
 
     session_date = fields.Date(
         string='Session Date',
-        default=fields.Datetime.now()
+        default=fields.Datetime.now(),
+        track_visibility='onchange'
     )
 
     min_attendee = fields.Integer(
-        string='Minimum Attendee'
+        string='Minimum Attendee',
+        track_visibility='onchange'
     )
 
     attendee_ids = fields.One2many(
@@ -40,6 +45,43 @@ class Session(models.Model):
         string='Taken Seats',
         store=True,
     )
+    state = fields.Selection(string='State', selection=[
+        ('draft', 'Draft'),
+        ('confirm', 'Confirm'),
+        ('done', 'Done'),
+        ('cancel', 'Cancel'),
+    ],  readonly=True, default='draft', required=True, track_visibility='onchange')
+
+    def action_confirm(self):
+        # validasi
+        # manipulasi
+        # rubah state ke confirm
+        self.write({'state': 'confirm'})
+
+    def action_done(self):
+        # validasi
+        # manipulasi
+        # rubah state ke done
+        self.write({'state': 'done'})
+
+    def action_cancel(self):
+        # validasi
+        # manipulasi
+        # rubah state ke cancel
+        self.write({'state': 'cancel'})
+
+    def action_draft(self):
+        # validasi
+        # manipulasi
+        # rubah state ke draft
+        self.write({'state': 'draft'})
+
+    # @api.multi
+
+    def unlink(self):
+        if self.filtered(lambda line: line.state != 'draft'):
+            raise exceptions.UserError('tidak bisa hapus data selain draft')
+        return super(Session, self).unlink()
 
     @api.depends('min_attendee', 'attendee_ids')
     def _compute_taken_seats(self):
@@ -47,8 +89,7 @@ class Session(models.Model):
             if not record.min_attendee:
                 record.taken_seats = 0.0
             else:
-                record.taken_seats = 100.0 * \
-                    len(record.attendee_ids) / record.min_attendee
+                record.taken_seats = 100.0 *len(record.attendee_ids) / record.min_attendee
 
     @api.onchange('min_attendee', 'attendee_ids')
     def _onchange_attende(self):
@@ -71,18 +112,20 @@ class Session(models.Model):
         # sql constraints
         _sql_constraints = [
             ('name_unique',
-             'UNIQUE(name)',
-             "Nama session harus unik, tidak boleh sama!!!"),
+            'UNIQUE(name)',
+            "Nama Session harus unik, tidak boleh sama!!!!"),
         ]
 
-        # python constraints
-        @api.constrains('instrtuctor_id', 'attendee_ids' )
-        def _check_instructor_not_in_attendees(self):
-            for r in self:
-                students = [record.student_id.id for record in r.attendee_ids]
 
-                if r.instructor_id and r.instructor_id in students:
-                    raise exceptions.ValidationError("Instructor tidak boleh menjadi attendee....!!!")
+        # python constraints
+        @api.constrains('instructor_id', 'attendee_ids')
+        def _check_instructor_not_in_attendees(self):
+                for r in self:
+                    students = [record.student_id.id for record in r.attendee_ids]
+                    if r.instructor_id and r.instructor_id.id in students:
+                        raise exceptions.ValidationError("Instructor tidak boleh menjadi Attendee...!!!")
+    
+
 
           # all records passed the test, don't return anything
 

@@ -15,8 +15,7 @@
                 <t t-foreach="docs" t-as="doc">
                     <t t-call="web.external_layout">
                         <div class="page">
-                            <h3 class="text-center">
-                             Session Report<br />
+                            <h3 class="text-center"> Session Report<br />
                                 <small>
                                     <span t-esc="doc.name" />
                                 </small>
@@ -46,7 +45,7 @@
                                     <td>
                                         <span t-esc="attn.student_id.name" />
                                     </td>
-                                    <t t-esc="no" t-value="no+1" />
+                                    <t t-set="no" t-value="no+1" />
                                 </tr>
                             </table>
                         </div>
