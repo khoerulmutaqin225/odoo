@@ -30,6 +30,7 @@
         'views/rest_partner.xml',
         'views/session_views.xml',
         'report/session_report.xml',
+        'views/progress_views.xml',
 
     ],
     # only loaded in demonstration mode

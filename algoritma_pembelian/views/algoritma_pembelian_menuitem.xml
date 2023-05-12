@@ -2,14 +2,14 @@
 <odoo>
 
     <menuitem
-        id="parent_algoritma_pembelian_id"
+        id="algoritma_pembelian_menu_root"
         name="Pembelian"
         sequence="5" />
-    <menuitem
-        id="child_algoritma_pembelian_id"
-        name="Pembelian"
-        sequence="1"
-        parent="parent_algoritma_pembelian_id" 
-        action="pembelian_actions_id"/>
 
+    <menuitem
+        id="algoritma_pembelian_master_menu_categ"
+        name="Pembelian"
+        parent="algoritma_pembelian_menu_root"
+        sequence="1"
+    />
 </odoo>

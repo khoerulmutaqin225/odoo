@@ -1,16 +1,130 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <odoo>
+    <data>
 
-    <record id="algoritma_pembelian_tree_view_id" model="ir.ui.view">
-        <field name="name">algoritma_pembelian_tree_view_id</field>
-        <field name="model">algoritma.pembelian</field>
-        <field name="arch" type="xml">
-            <tree>
-                <field name="name" />
-                <field name="tanggal" />
-                <field name="status" />
-            </tree>
-        </field>
-    </record>
+
+        <record id="algoritma_pembelian_kanban_view_tree" model="ir.ui.view">
+            <field name="name">algoritma.pembelian.kanban</field>
+            <field name="model">algoritma.pembelian</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <!-- Add your fields here -->
+                    <field name="name" />
+                    <field name="tanggal" />
+                    <field name="status" />
+                    <template>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div class="0_kanban_record_top mb16">
+                                    <strong>
+                                        <span>
+                                            <t t-esc="record.name.value" />
+                                        </span>
+                                    </strong>
+                                </div>
+                                <div class="0_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left">
+                                        <span>
+                                            <t t-esc="record.tanggal.value" />
+                                        </span>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <span>
+                                            <t t-esc="record.status.value" />
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </template>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- algoritma_pembelian tree view -->
+        <record id="algoritma_pembelian_view_tree" model="ir.ui.view">
+            <field name="name">algoritma.pembelian.view.tree</field>
+            <field name="model">algoritma.pembelian</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <!-- Add your fields here -->
+                    <field name="name" />
+                    <field name="tanggal" />
+                    <field name="status" />
+                </tree>
+            </field>
+        </record>
+
+
+
+        <!-- algoritma.pembelian form view -->
+        <record id="algoritma_pembelian_view_form" model="ir.ui.view">
+            <field name="name">algoritma.pembelian.view.form</field>
+            <field name="model">algoritma.pembelian</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <!-- Add your fields here -->
+                            <group>
+                                <field name="name" />
+                                <field name="tanggal" />
+                            </group>
+                            <group>
+                                <field name="status" />
+                            </group>
+
+                            <notebook>
+                                <page name="tanggal" string="tanggal">
+                                    <field name="tanggal" />
+                                </page>
+                            </notebook>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- algoritma.pembelian search view -->
+        <record id="algoritma_pembelian_view_search" model="ir.ui.view">
+            <field name="name">algoritma.pembelian.view.search</field>
+            <field name="model">algoritma.pembelian</field>
+            <field name="arch" type="xml">
+                <search string="Search Description">
+                    <!-- Name adn description Search -->
+                    <!-- Add your fields here -->
+                    <field name="name" />
+                    <field name="tanggal" />
+                </search>
+            </field>
+        </record>
+
+      
+
+        <!-- algoritma.pembelian action window -->
+        <record id="algoritma_pembelian_action" model="ir.actions.act_window">
+            <field name="name">algoritma.pembelian.action</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">algoritma.pembelian</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <!-- <field name="view_type">form</field> -->
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    <!-- Add Text Here -->
+                </p>
+                <p>
+                    <!-- More details about what a user can do with this object will be OK -->
+                </p>
+            </field>
+        </record>
+
+
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="algoritma_pembelian_menu_act"
+            name="Pembelian"
+            parent="algoritma_pembelian_master_menu_categ"
+            action="algoritma_pembelian_action"
+            sequence="10" />
+    </data>
 
 </odoo>
