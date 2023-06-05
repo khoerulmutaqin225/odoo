@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <!-- algoritma_pembelian tree view -->
+        <record id="algoritma_pembelian_tree_view_id" model="ir.ui.view">
+            <field name="name">algoritma_pembelian_tree_view_id</field>
+            <field name="model">algoritma.pembelian</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <!-- Add your fields here -->
+                    <field name="name" />
+                    <field name="tanggal" />
+                    <field name="status" />
+                </tree>
+            </field>
+        </record>
+
+  <!-- algoritma_pembelian kanban view -->
+		<record id="algoritma_pembelian_kanban_view_id" model="ir.ui.view">
+			<field name="name">algoritma_pembelian_kanban_view_id</field>
+			<field name="model">algoritma.pembelian</field>
+			<field name="arch" type="xml">
+				<kanban class="o_kanban_mobile">
+							<field name="name"/>		
+							<field name="tanggal"/>
+							<field name="status"/>
+							<templates>
+								<t t-name="kanban-box">
+									<div t-attf-class="oe_kanban_global_click">
+											<div class="o_kanban_record_top mb16">
+												<strong><span><t t-esc="record.name.value"/></span></strong>
+											</div>
+											<div class="o_kanban_record_bottom">
+												<div class="oe_kanban_bottom_left">
+													<span><t t-esc="record.tanggal.value"/></span>
+												</div>
+												<div class="oe_kanban_bottom_right">
+													<span><t t-esc="record.status.value"/></span>
+												</div>
+											</div>
+									</div>
+								</t>
+							</templates>
+				</kanban>
+			</field>
+		</record>
+		  <!-- algoritma_pembelian form view -->
+		<record id="algoritma_pembelian_form_view_id" model="ir.ui.view">
+			<field name="name">algoritma_pembelian_form_view_id</field>
+			<field name="model">algoritma.pembelian</field>
+			<field name="arch" type="xml">
+				<form>
+				<header>
+					<field name="status" widget="statusbar"/>
+				</header>
+					<sheet>
+						<group>
+							<group>
+								<field name="name"/>		
+							</group>
+							<group>
+								<field name="tanggal"/>
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+</odoo>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- algoritma.pembelian action window -->
+	<record id="algoritma_pembelian_action" model="ir.actions.act_window">
+			<field name="name">algoritma.pembelian.action</field>
+	        <!-- <field name="sequence" eval="1" /> -->
+			<!-- <field name="view_id" ref="algoritma_pembelian_tree_view_id" /> -->
+			<field name="res_model">algoritma.pembelian</field>
+			<field name="view_mode">tree,form,kanban</field>
+			<!-- <field name="view_type">form</field> -->
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					<!-- Add Text Here -->
+				</p>
+				<p>
+					<!-- More details about what a user can do with this object will be OK -->
+				</p>
+			</field>
+	</record>
+	   
+	<!-- This Menu Item must have a parent and an action -->
+	<menuitem id="algoritma_pembelian_menu_act"
+		name="Pembelian"
+		parent="parent_algoritma_pembelian_id"
+		action="algoritma_pembelian_action"
+		sequence="10" />
+
+
+</odoo>
