@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+	<data>
+
+		<!-- arisnew_course tree view -->
+		<record id="arisnew_course_category_view_tree" model="ir.ui.view">
+			<field name="name">arisnew.course.category.view.tree</field>
+			<field name="model">arisnew.course.category</field>
+			<field name="arch" type="xml">
+				<tree>
+					<!-- Add your fields here -->
+					<field name="name" />
+					<field name="description" />
+					<field name="active" />
+				</tree>
+			</field>
+		</record>
+
+		<!-- arisnew.course form view -->
+		<record id="arisnew_course_category_view_form" model="ir.ui.view">
+			<field name="name">arisnew.course.category.view.form</field>
+			<field name="model">arisnew.course.category</field>
+			<field name="arch" type="xml">
+				<form string="">
+					<sheet>
+						<group>
+							<!-- Add your fields here -->
+							<group>
+								<field name="name" />
+							</group>
+								<group>
+								<field name="active" />
+							</group>
+
+							<notebook>
+								<page name="Description" string="description">
+									<field name="description" />
+								</page>
+								<page name="Course" string="Course">
+									<field name="course_ids" />
+								</page>
+							</notebook>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<!-- arisnew.course.category search view -->
+		<record id="arisnew_course_category_view_search" model="ir.ui.view">
+			<field name="name">arisnew.course.category.view.search</field>
+			<field name="model">arisnew.course.category</field>
+			<field name="arch" type="xml">
+				<search string="Search Course Category">
+					<!-- Name adn description Search -->
+					<!-- Add your fields here -->
+					<field name="name" />
+					<field name="description" />
+
+				</search>
+			</field>
+		</record>
+
+		<!-- arisnew.course.category action window -->
+		<record id="arisnew_course_category_action" model="ir.actions.act_window">
+			<field name="name">Course Categories</field>
+			<!-- <field name="type">ir.actions.act_window</field> -->
+			<field name="res_model">arisnew.course.category</field>
+			<field name="view_mode">tree,form</field>
+			<!-- <field name="view_type">form</field> -->
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					<!-- Add Text Here -->
+				</p>
+				<p>
+					<!-- More details about what a user can do with this object will be OK -->
+				</p>
+			</field>
+		</record>
+
+		<!-- This Menu Item must have a parent and an action -->
+		<menuitem id="arisnew_course_category_menu_act"
+			name="Course Category"
+			parent="arisnew_academy_master_menu_categ"
+			action="arisnew_course_category_action"
+			sequence="20" />
+	</data>
+</odoo>

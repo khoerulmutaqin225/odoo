@@ -18,6 +18,11 @@ class Course(models.Model):
     )
 
     active = fields.Boolean(
-        string='Active', 
+        string='Active',
         default=True
+    )
+
+    category_id = fields.Many2one(
+        comodel_name='arisnew.course.category',
+        string='Category',
     )

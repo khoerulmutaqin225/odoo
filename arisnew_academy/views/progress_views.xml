@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <!-- arisnew_progress tree view -->
+        <record id="arisnew_progress_view_tree" model="ir.ui.view">
+            <field name="name">arisnew.progress.view.tree</field>
+            <field name="model">arisnew.progress</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <!-- Add your fields here -->
+                    <field name="no" />
+                    <field name="deskripsi" />
+                    <field name="pic" />
+                    <field name="tgl_awal" />
+                    <field name="do_that" />
+                    <field name="tgl_akhir" />
+                    <field name="progress" widget="progressbar" />
+                    <field name="state" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- arisnew.progress form view -->
+        <record id="arisnew_progress_view_form" model="ir.ui.view">
+            <field name="name">arisnew.progress.view.form</field>
+            <field name="model">arisnew.progress</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <header>
+                        <button type="object" name="action_confirm" string="Confirm"
+                            class="oe_highlight"
+                            states="draft" />
+                        <button type="object" name="action_done" string="Done" class="oe_highlight"
+                            states="confirm" />
+                        <button type="object" name="action_cancel" string="Cancel"
+                            class="btn-danger" states="confirm,done"
+                            confirm="yakin mau cancel data ini?" />
+                        <button type="object" name="action_Reset" string="Reset to Draft"
+                            class="oe_highlight" states="cancel"
+                            confirm="yakin mau reset ke draft" />
+
+                        <field name="state" widget="statusbar"
+                            statusbar_visible="draft,confirm,done" />
+                    </header>
+
+                    <sheet>
+
+                        <group>
+                            <!-- Add your fields here -->
+                            <field name="no"
+                                attrs="{'readonly': [('state', '!=' , 'draft')]}" />
+
+                            <!-- attrs="{'readonly': [('state', '!=' , 'draft')], or ('state',
+                                '=', 'confirmed')]}" -->
+                            <field
+                                name="pic"
+                                attrs="{'readonly': [('state', '!=' , 'draft')]}" />
+                            <field name="tgl_awal"
+                                attrs="{'readonly': [('state', '!=' , 'draft')]}" />
+                            <field name="do_that"
+                                attrs="{'readonly': [('state', '!=' , 'draft')]}" />
+                            <field name="tgl_akhir"
+                                attrs="{'readonly': [('state', '!=' , 'draft')]}" />
+                            <field name="tag_ids" widget="many2many_tags"
+                                options="{'color_field': 'color', 'no_create_edit': True}" />
+                            <field name="progress"
+                                attrs="{'readonly': [('state', '!=' , 'draft')]}"
+                                string="Progress (%)" widget="progressbar"/>
+                            <!-- <field name="taken_seats" widget="progressbar" /> -->
+                        </group>
+                        <notebook>
+                            <page name="description_page" string="Description">
+                                <field name="deskripsi" type="html" />
+                                <div class="oe_clear" />
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_follower" />
+                        <field name="message_ids" widget="mail_thread" />
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Catatan Patokan -->
+        <!-- arisnew.progress action window -->
+        <record id="arisnew_progress_action" model="ir.actions.act_window">
+            <field name="name">arisnew.progress.action</field>
+            <!-- <field name="type">ir.actions.act_window</field> -->
+            <field name="res_model">arisnew.progress</field>
+            <field name="view_mode">tree,form</field>
+            <!-- <field name="view_type">form</field> -->
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create New Progress....
+                </p>
+                <p>
+
+                </p>
+            </field>
+        </record>
+
+        <!-- arisnew.progress search view -->
+        <record id="arisnew_progress_view_search" model="ir.ui.view">
+            <field name="name">arisnew.progress.view.search</field>
+            <field name="model">arisnew.progress</field>
+            <field name="arch" type="xml">
+                <search string="Search Description">
+                    <!-- Add your fields here -->
+                    <field name="pic" />
+                    <field name="deskripsi" />
+                    <field name="tgl_awal" />
+                    <field name="do_that" />
+                    <field name="tgl_akhir" />
+                    <field name="state" />
+
+                    <filter name="nlm" string="NLM" domain="[('tag_ids', 'ilike', 'nlm')]" />
+                    <filter name="toolbox" string="TOOLBOX"
+                        domain="[('tag_ids', 'ilike', 'toolbox')]" />
+                    <filter name="qshe" string="QSHE" domain="[('tag_ids', 'ilike', 'qshe')]" />
+
+                    <!-- 
+                    <group string="Group by">
+                        <filter name="Group_by_course"
+                            string="Course"
+                            context="{'group_by': 'course_id'}" />
+                        <filter name="Group_by_instructor"
+                            string="Instructor"
+                            context="{'group_by': 'instructor_id'}" />
+                    </group> -->
+
+
+                </search>
+            </field>
+        </record>
+
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="arisnew_progress_menu_act"
+            name="Progress"
+            parent="arisnew_academy_menu_root"
+            action="arisnew_progress_action"
+            sequence="20" />
+
+
+    </data>
+
+</odoo>
